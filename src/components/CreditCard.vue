@@ -104,7 +104,8 @@ export default {
         margin: 0 1rem;
         font-weight: bold;
         font-size: small;
-        border-radius: 4px;
+        border-top-left-radius: 4px;
+        border-top-right-radius: 4px;
     }
     .show-btn:hover {
         filter: brightness(120%);

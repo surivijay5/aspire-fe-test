@@ -43,7 +43,7 @@
 import {BModal, BFormDatepicker, BFormInput, BAlert} from 'bootstrap-vue'
 
 export default {
-  name: 'HelloWorld',
+  name: 'NewCard',
   props: {
     msg: String
   },

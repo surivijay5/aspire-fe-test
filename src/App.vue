@@ -1,26 +1,42 @@
 <template>
+<div class="app-wrapper">
   <div id="app">
-    <section class="header">
-      aspire
+    <section class="main-header app-item">
+      <main-header @addCard="addCard"></main-header>
     </section>
-    <section class="new-card">
-      <new-card @addCard="addCard"></new-card>
-    </section>
-    <section class="cards-carousal">
+    <section class="cards-carousal app-item">
       <carousal :cards="cards"></carousal>
     </section>
+    <section class="card-actions app-item">
+      <card-actions></card-actions>
+    </section>
+    <section class="main-content app-item">
+      <main-content></main-content>
+    </section>
+    <section class="credit-card-footer">
+      <main-footer></main-footer>
+    </section>
   </div>
+</div>
 </template>
 
 <script>
-import NewCard from './components/NewCard.vue'
+import MainHeader from './components/Header.vue'
+import CardActions from './components/CardActions.vue'
 import Carousal from './components/Carousal.vue'
+import MainContent from './components/MainContent.vue'
+import MainFooter from './components/Footer.vue'
+
 
 export default {
   name: 'App',
   components: {
-    NewCard,
-    Carousal
+    MainHeader,
+    Carousal,
+    CardActions,
+    MainFooter,
+    MainContent
+    // BButton
   },
   methods:{
     addCard(data){
@@ -56,6 +72,10 @@ export default {
   border: 0;
 }
 
+.app-wrapper{
+  background-color: whitesmoke;
+}
+
 #app{
   display: flex;
   flex-direction: column;
@@ -66,16 +86,40 @@ export default {
   background-color: rgb(12, 55, 90);
 }
 
-.new-card{
-  display:flex;
-  justify-content: flex-end;
-  margin: 1em;
-}
-
 .cards-carousal{
   display: flex;
-  margin: 0px 1.5em;
-  height: 50%;
+  margin: 0px 1em;
+}
+
+.credit-card-footer{
+  margin-top: auto;
+}
+.footer-wrapper{
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  background-color: #ffffff;
+  padding: 0.5rem;
+  box-shadow: 0px 10px 5px #888, 0px -2px 3px #888;
+}
+
+
+.action{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: #597792;
+  cursor: pointer;
+}
+
+.text{
+  font-size: x-small;
+  text-align: center;
+}
+
+.main-content{
+  height: 100%;
+  background-color: white;
 }
 
 @media only screen and (max-width: 1200px) {
