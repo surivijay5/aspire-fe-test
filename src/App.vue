@@ -80,7 +80,6 @@ export default {
   display: flex;
   flex-direction: column;
   align-content: center;
-  height: 100vh;
   width : 30vw;
   margin: 0 35vw;
   background-color: rgb(12, 55, 90);
@@ -100,7 +99,7 @@ export default {
   align-items: center;
   background-color: #ffffff;
   padding: 0.5rem;
-  box-shadow: 0px 10px 5px #888, 0px -2px 3px #888;
+  box-shadow: 0px 0px 5px #888, 0px -2px 3px #888;
 }
 
 
@@ -119,7 +118,6 @@ export default {
 
 .main-content{
   /* padding: 2.75em 0em; */
-  flex-grow: 1;
   background-color: white;
 }
 

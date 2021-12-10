@@ -24,6 +24,10 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
+
+.footer-wrapper{
+    display: flex;
+}
 
 </style>
