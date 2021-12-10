@@ -1,6 +1,8 @@
 <template>
   <div id="app">
-    <section class="header"></section>
+    <section class="header">
+      aspire
+    </section>
     <section class="new-card">
       <new-card @addCard="addCard"></new-card>
     </section>
@@ -23,11 +25,25 @@ export default {
   methods:{
     addCard(data){
         this.cards.push(data)
+        console.log(this.cards)
     }
   },
   data(){
     return {
-      cards: []
+      cards: [
+          {
+              "name": "Vijay Sai Krishna",
+              "cardNo": "5431111111111111",
+              "expiry": "12/12",
+              "cvv": "111"
+          },
+          {
+              "name": "Krishan",
+              "cardNo": "4012888888881881",
+              "expiry": "11/11",
+              "cvv": "222"
+          }
+      ]
     }
   }
 }
@@ -45,21 +61,24 @@ export default {
   flex-direction: column;
   align-content: center;
   height: 100vh;
-  width : 40vw;
-  margin: 0 30vw;
+  width : 30vw;
+  margin: 0 35vw;
   background-color: rgb(12, 55, 90);
 }
 
-section{
-  display: flex;
+.new-card{
+  display:flex;
+  justify-content: flex-end;
   margin: 1em;
 }
 
-.new-card{
-  justify-content: end;
+.cards-carousal{
+  display: flex;
+  margin: 0px 1.5em;
+  height: 50%;
 }
 
-@media only screen and (max-width: 600px) {
+@media only screen and (max-width: 1200px) {
 #app{
   width: 100vw;
   margin: 0;

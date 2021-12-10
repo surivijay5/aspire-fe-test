@@ -80,7 +80,7 @@ export default {
       return data.length == 3
     },
     validateCardNo(data){
-      return data.length == 12
+      return data.length == 16
     },
     validate(index){
       const info = this.cardDetailsCopy[index]

@@ -1,41 +1,58 @@
 <template>
- <div>
-    <b-carousel
-      id="carousel-1"
-      v-model="slide"
-      :interval="4000"
-      indicators
-      background="#ababab"
-      style="text-shadow: 1px 1px 2px #333;"
-      @sliding-start="onSlideStart"
-      @sliding-end="onSlideEnd"
-    >
-      <b-carousel-slide>
-        <template #img>
-          <img
-            class="d-block img-fluid w-100"
-            width="1024"
-            height="480"
-            src="https://picsum.photos/1024/480/?image=55"
-            alt="image slot"
-          >
-        </template>
-      </b-carousel-slide>
-    </b-carousel>
+ <div class="carousal w-100">
+    <div>
+      <credit-card :card="cards[slide]"></credit-card>
+    </div>
+    <div class="nav-indicator">
+      <div v-for="(card,index) in cards" :key="index" :class="{ active: index == slide, 'indicator': true }" @click="selectSlide(index)"></div>
+    </div>
 </div>
 </template>
 
 <script>
-import {BCarousel, BCarouselSlide} from 'bootstrap-vue'
-export default {
+import CreditCard from './CreditCard.vue'
 
+export default {
+  name: 'Carousal',
+  props: ['cards'],
 components:{
-    BCarousel,
-    BCarouselSlide
-}
+    // BCarousel,
+    // BCarouselSlide,
+    CreditCard
+},
+    methods: {
+      selectSlide(index){
+        this.slide = index
+      }
+    },
+  data() {
+      return {
+        slide: 0
+      }
+    },
 }
 </script>
 
-<style>
+<style scoped>
+  .nav-indicator {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+  }
+  .indicator {
+    width: 10px;
+    height: 10px;
+    background-color: #0b445c;
+    border-radius:  50%;
+    margin: 0 10px;
+    cursor: pointer;
+  }
+  .indicator.active {
+    background-color: #01d167;
+    width: 15px;
+    height: 10px;
+    border-radius:  30px;
+  }
 
 </style>
