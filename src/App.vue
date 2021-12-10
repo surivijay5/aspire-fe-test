@@ -92,7 +92,7 @@ export default {
 }
 
 .credit-card-footer{
-  margin-top: auto;
+  /* margin-top: auto; */
 }
 .footer-wrapper{
   display: flex;
@@ -120,7 +120,6 @@ export default {
 .main-content{
   /* padding: 2.75em 0em; */
   flex-grow: 1;
-  align-self: stretch;
   background-color: white;
 }
 
