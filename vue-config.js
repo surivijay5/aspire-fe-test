@@ -1,3 +1,5 @@
 module.exports = {
-    publicPath: "/aspire-fe-test/",
+    publicPath: process.env.NODE_ENV === 'production' ?
+        "/aspire-fe-test/" :
+        '/'
 };
