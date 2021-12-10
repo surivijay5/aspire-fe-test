@@ -118,7 +118,7 @@ export default {
 }
 
 .main-content{
-  height: 100%;
+  height: 30%;
   background-color: white;
 }
 
