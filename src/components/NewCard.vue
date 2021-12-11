@@ -41,6 +41,8 @@
 <script>
 
 import {BModal, BFormDatepicker, BFormInput, BAlert} from 'bootstrap-vue'
+import {randomIntFromInterval} from '../utils/helpers.js'
+let generator = require('creditcard-generator')
 
 export default {
   name: 'NewCard',
@@ -62,6 +64,7 @@ export default {
   methods: {
     resetData(){
       this.cardDetailsCopy = JSON.parse(JSON.stringify(this.cardDetails))
+      this.errorMessage = ""
     },
     showModal() {
       this.resetData()
@@ -89,19 +92,31 @@ export default {
       else if (info.id == 'cardNo') return this.validateCardNo(info.bindedValue)
       return true
     },
+    appendExtraInfo(data){
+      let temp = JSON.parse(JSON.stringify(data))
+      let monthRandom = randomIntFromInterval(1,12)
+      if(!temp.cardNo) temp.cardNo = generator.GenCC("VISA", 1)[0]
+      if(!temp.cvv) temp.cvv = randomIntFromInterval(101, 999).toString()
+      if(!temp.expiry) temp.expiry = `${ monthRandom < 10 ? "0" + monthRandom : monthRandom}/${randomIntFromInterval(20,40)}`
+      temp.isFrozen = false
+      return temp
+    },
     addCard(){
       const validatedArr = this.cardDetailsCopy.map((_, index) => this.validate(index))
+      console.log(finalCardDetails)
       if(validatedArr.some(p => !p)){
         this.errorMessage = "please enter all details"
         return
       }
       const newcard = this.cardDetailsCopy.reduce((a,c) => { a[c.id] = c.bindedValue; return a }, {})
+      const finalCardDetails = this.appendExtraInfo(newcard)
       this.resetData()
       this.hideModal()
-      this.$emit('addCard', newcard)
+      this.$emit('addCard', finalCardDetails)
     }
   },
   data(){
+      // Uncomment to have additional fields in UI
       return {
           email : "",
           emailBlured : false,
@@ -115,28 +130,29 @@ export default {
             type: 'text',
             bindedValue : '',
             isBlurred: false
-          },{
-            id : 'cardNo',
-            description : "Card Number",
-            feedBack: 'A Valid Card Number is required',
-            type: 'number',
-            bindedValue : '',
-            isBlurred: false
-          },{
-            id : 'expiry',
-            description : "Expiration (mm/yy)",
-            feedBack: 'A valid expiration date is required',
-            type: 'expiry',
-            bindedValue : '',
-            isBlurred: false
-          },{
-            id : 'cvv',
-            type: 'password',
-            feedBack: 'A valid CVV is required',
-            description : "CVV",
-            bindedValue : '',
-            isBlurred: false
           }],
+          // ,{
+          //   id : 'cardNo',
+          //   description : "Card Number",
+          //   feedBack: 'A Valid Card Number is required',
+          //   type: 'number',
+          //   bindedValue : '',
+          //   isBlurred: false
+          // },{
+          //   id : 'expiry',
+          //   description : "Expiration (mm/yy)",
+          //   feedBack: 'A valid expiration date is required',
+          //   type: 'expiry',
+          //   bindedValue : '',
+          //   isBlurred: false
+          // },{
+          //   id : 'cvv',
+          //   type: 'password',
+          //   feedBack: 'A valid CVV is required',
+          //   description : "CVV",
+          //   bindedValue : '',
+          //   isBlurred: false
+          // }],
           cardDetailsCopy : []
       }
   }

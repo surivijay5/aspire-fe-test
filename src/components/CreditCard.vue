@@ -1,10 +1,10 @@
 <template>
-<div class="wrapper">
+<div class="wrapper" v-if="cardCopy">
     <button size="sm" class="show-btn" @click="showCardNo = !showCardNo">
       <b-icon icon="eye" aria-hidden="true"></b-icon> {{showCardNo ? "Hide" : "Show"}} card number
     </button>
-  <section class="credit-card">
-      <div class="header mb-0" > <img src="../assets/logo-white.png" />aspire</div>
+  <section :class="{'credit-card':true, 'isFrozen' : cardCopy.isFrozen }">
+      <div class="header mb-0" > <img :src="imgSrc" :class="{'isFrozenImg' : cardCopy.isFrozen }"/>aspire</div>
       <div class="name">{{cardCopy.name}}</div>
       <div class="number">{{cardNo | VMask('XXXX XXXX XXXX XXXX') }}</div>
       <div class="more_info_wrapper">
@@ -15,6 +15,11 @@
           {{getCardType(cardCopy.cardNo)}}
       </div>
   </section>
+</div>
+<div v-else>
+    <section class="credit-card d-flex justify-content-center align-items-center" >
+        <div> No Cards Available. Add a new Card</div>
+    </section>
 </div>
 </template>
 
@@ -37,7 +42,13 @@ export default {
             return '************' + cardNo.substring(12,16)
         },
         cardCopy(){
+            if(!this.card) return null
             return JSON.parse(JSON.stringify(this.card))
+        },
+        imgSrc(){
+            var images = require.context('../assets/', false, /\.png$/)
+            let imageSrc = this.card.isFrozen ? "logo-frozen.png" : "logo-white.png"
+            return images('./' + imageSrc)
         }
     },
     methods:{
@@ -111,6 +122,15 @@ export default {
         filter: brightness(120%);
         background-color: white;
         color: #01d167;
+    }
+
+    .isFrozen{
+        background-color: #01d16780;
+        color: rgb(255, 255, 255,0.5);
+    }
+
+    .isFrozenImg{
+        opacity: 0.2;
     }
 
     @media only screen and (max-width: 800px) {

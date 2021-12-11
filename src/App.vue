@@ -5,10 +5,7 @@
       <main-header @addCard="addCard"></main-header>
     </section>
     <section class="cards-carousal app-item">
-      <carousal :cards="cards"></carousal>
-    </section>
-    <section class="card-actions app-item">
-      <card-actions></card-actions>
+      <carousal :cards="cards" @deleteCard="deleteCard" @toggleFreeze="toggleFreeze"></carousal>
     </section>
     <section class="main-content app-item">
       <main-content></main-content>
@@ -22,7 +19,6 @@
 
 <script>
 import MainHeader from './components/Header.vue'
-import CardActions from './components/CardActions.vue'
 import Carousal from './components/Carousal.vue'
 import MainContent from './components/MainContent.vue'
 import MainFooter from './components/Footer.vue'
@@ -33,31 +29,44 @@ export default {
   components: {
     MainHeader,
     Carousal,
-    CardActions,
     MainFooter,
     MainContent
     // BButton
   },
   methods:{
     addCard(data){
+        const ids = this.cards.map( p => p.id)
+        const maxId = ids.length > 0 ? Math.max(...ids) : -1
+        data["id"] = maxId + 1
         this.cards.push(data)
         console.log(this.cards)
+    },
+    deleteCard(cardId){
+      const index = this.cards.findIndex(p => p.id == cardId)
+      this.cards.splice(index,1)
+    },
+    toggleFreeze(index){
+      this.cards[index].isFrozen = !this.cards[index].isFrozen
     }
   },
   data(){
     return {
       cards: [
           {
+              "id": 0,
               "name": "Vijay Sai Krishna",
               "cardNo": "5431111111111111",
               "expiry": "12/12",
-              "cvv": "111"
+              "cvv": "111",
+              "isFrozen" : false
           },
           {
+              "id": 1,
               "name": "Krishan",
               "cardNo": "4012888888881881",
               "expiry": "11/11",
-              "cvv": "222"
+              "cvv": "222",
+              "isFrozen" : false
           }
       ]
     }
@@ -80,6 +89,7 @@ export default {
   display: flex;
   flex-direction: column;
   align-content: center;
+  height: 100vh;
   width : 30vw;
   margin: 0 35vw;
   background-color: rgb(12, 55, 90);
@@ -87,7 +97,6 @@ export default {
 
 .cards-carousal{
   display: flex;
-  margin: 0px 1em;
 }
 
 .credit-card-footer{
@@ -118,6 +127,7 @@ export default {
 
 .main-content{
   /* padding: 2.75em 0em; */
+  flex-grow: 1;
   background-color: white;
 }
 
@@ -125,6 +135,9 @@ export default {
 #app{
   width: 100vw;
   margin: 0;
+}
+.main-content{
+  flex-grow: 0;
 }
 }
 </style>

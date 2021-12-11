@@ -6,23 +6,42 @@
     <div class="nav-indicator">
       <div v-for="(card,index) in cards" :key="index" :class="{ active: index == slide, 'indicator': true }" @click="selectSlide(index)"></div>
     </div>
+    <section class="card-actions app-item">
+      <card-actions :isFrozen="isFrozen" @toggleFreeze="toggleFreeze" @deleteCard="deleteCard"></card-actions>
+    </section>
 </div>
 </template>
 
 <script>
 import CreditCard from './CreditCard.vue'
+import CardActions from './CardActions.vue'
 
 export default {
   name: 'Carousal',
   props: ['cards'],
-components:{
-    // BCarousel,
-    // BCarouselSlide,
-    CreditCard
-},
-    methods: {
+  components:{
+      // BCarousel,
+      // BCarouselSlide,
+      CreditCard,
+      CardActions,
+  },
+  computed:{
+    isFrozen(){
+      return this.cards[this.slide]?.isFrozen
+    }
+  },
+  methods: {
       selectSlide(index){
         this.slide = index
+      },
+      deleteCard(isToBeDeleted){
+        if(isToBeDeleted){
+          this.$emit('deleteCard', this.cards[this.slide]["id"])
+          this.slide= 0
+        }
+      },
+      toggleFreeze(){
+        this.$emit('toggleFreeze', this.slide)
       }
     },
   data() {
