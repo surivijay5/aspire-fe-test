@@ -1,24 +1,18 @@
 # aspire-fe-test
 
 ## Project setup
+
+First Run Project Setup Using
+
 ```
 npm install
 ```
+to download all the required packages
 
 ### Compiles and hot-reloads for development
+
+Once dependencies are installed, run
 ```
 npm run serve
 ```
-
-### Compiles and minifies for production
-```
-npm run build
-```
-
-### Lints and fixes files
-```
-npm run lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+to start the development server
